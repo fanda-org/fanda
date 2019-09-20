@@ -1,0 +1,68 @@
+<div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
+  <div class="container">
+    <div class="row align-items-center">
+      {{#unless active.organizations }}
+      <div class="col-lg-3 ml-auto">
+        <form class="input-icon my-3 my-lg-0">
+          <input type="search" class="form-control header-search" placeholder="Search&hellip;" tabindex="1">
+          <div class="input-icon-addon">
+            <i class="fe fe-search"></i>
+          </div>
+        </form>
+      </div>
+      {{/unless}}
+      <div class="col-lg order-lg-first">
+        <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
+          <li class="nav-item">
+            <a href="/" class="nav-link {{#if active.home}}active{{/if}}"><i class="fe fe-home"></i> Home</a>
+          </li>
+          <li class="nav-item">
+            <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-book"></i>
+              Transactions</a>
+            <div class="dropdown-menu dropdown-menu-arrow">
+              <a href="/cards.html" class="dropdown-item "><i class="fe fe-shopping-cart"></i> Sales</a>
+              <a href="/charts.html" class="dropdown-item "><i class="fe fe-truck"></i> Purchase</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-box"></i>
+              Inventory</a>
+            <div class="dropdown-menu dropdown-menu-arrow">
+              <a href="/maps.html" class="dropdown-item ">Goods and Services</a>
+              <a href="/icons.html" class="dropdown-item ">Categories</a>
+              <a href="/store.html" class="dropdown-item ">Units</a>
+              <div class="dropdown-divider"></div>
+              <a href="/blog.html" class="dropdown-item ">Brands</a>
+              <a href="/carousel.html" class="dropdown-item ">Segments</a>
+              <a href="/email.html" class="dropdown-item ">Varieties</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-users"></i>
+              Contacts</a>
+            <div class="dropdown-menu dropdown-menu-arrow">
+              <a href="/profile.html" class="dropdown-item "><i class="fe fe-user"></i> Business Contacts</a>
+              <a href="/login.html" class="dropdown-item "><i class="fe fe-dollar-sign"></i> Banks</a>
+              <div class="dropdown-divider"></div>
+              <a href="/register.html" class="dropdown-item "><i class="fe fe-package"></i> Category</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-pie-chart"></i>
+              Reports</a>
+            <div class="dropdown-menu dropdown-menu-arrow">
+              <a href="/profile.html" class="dropdown-item ">Sales Reports</a>
+              <a href="/login.html" class="dropdown-item ">Purchase Reports</a>
+              <div class="dropdown-divider"></div>
+              <a href="/register.html" class="dropdown-item ">Inventory Reports</a>
+              <a href="/forgot-password.html" class="dropdown-item ">Stock Reports</a>
+            </div>
+          </li>
+          {{!-- <li class="nav-item">
+            <a href="/docs/index.html" class="nav-link"><i class="fe fe-file-text"></i> Documentation</a>
+          </li> --}}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

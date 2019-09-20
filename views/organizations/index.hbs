@@ -1,0 +1,59 @@
+{{assign 'title' 'Organizations'}}
+
+<div class="card">
+  <div class="card-body">
+    <div class="row mb-4">
+      <div class="col-lg form-inline">
+        <button class="btn btn-primary mr-1"><i class="fe fe-plus-circle"></i> Create New</button>
+        <div class="btn-group mr-1" role="group">
+          <a class="btn btn-secondary"><i class="fe fe-grid"></i></a>
+          <a class="btn btn-secondary"><i class="fe fe-list"></i></a>
+        </div>
+        <div class="input-icon">
+          <input type="search" class="form-control" id="search" name="search" placeholder="Search&hellip;" />
+          <div class="input-icon-addon">
+            <i class="fe fe-search"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      {{#each orgs as |org|}}
+      <div class="col-lg-6">
+        <div class="card card-profile card-select">
+          <div class="card-header" style="background-image: url(/demo/photos/andrew-neel-141710-500.jpg);">
+          </div>
+          <div class="card-body text-center" style="transform: rotate(0);">
+            {{!-- <img class="card-profile-img" src="/demo/faces/male/16.jpg"> --}}
+            <canvas class="card-profile-img avatar" id="avatar" width="96" height="96">{{org.name}}</canvas>
+            <a class="stretched-link" href="/organizations/select/{{org._id}}" style="text-decoration-line: none;">
+              <h3 class="mb-2">{{org.name}}</h3>
+            </a>
+            <h4 class="mb-2">{{org.code}}</h4>
+            <p class="mb-2"> {{org.description}} </p>
+          </div>
+          <div class="card-footer">
+            <a href="/organizations/select/{{org._id}}" class="btn btn-primary"><i class="fe fe-check"></i> Select</a>
+            <button class="btn btn-secondary"><i class="fe fe-eye"></i> View</button>
+            <button class="btn btn-secondary"> <i class="fe fe-edit-3"></i> Edit </button>
+            <button class="btn btn-outline-danger">
+              <span class="fe fe-trash-2"></span> Delete
+            </button>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>
+<input type="hidden" id="orgId" name="orgId" value="{{currentOrg._id}}" />
+
+{{#section 'script'}}
+<script type="application/javascript">
+  require(['jquery', 'tabulator-tables'], function ($, Tabulator) {
+    $(document).ready(function () {
+      ;
+    });
+  });
+</script>
+{{/section}}

@@ -1,0 +1,43 @@
+{{assign 'title' 'Users'}}
+{{!-- <ul style="padding: 0">
+  {{#each users}}
+  <li style="list-style-type: none;margin-bottom: 5px;">
+    <input type="text" value="{{userName}}" />
+    <input type="text" value="{{email}}" />
+    <input type="text" value="{{firstName}}" />
+    <input type="text" value="{{lastName}}" />
+    <button class="ui button" type="button" id="btnSave" onclick="save('{{userName}}');">Save</button>
+  </li>
+  {{/each}}
+</ul> --}}
+
+<table class="table card-table table-vcenter text-nowrap datatable">
+  <thead>
+    <tr>
+      <th class="w-1">No.</th>
+      <th>Username</th>
+      <th>Email</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each users}}
+    <tr>
+      <td>{{@index}}</td>
+      <td>{{userName}}</td>
+      <td>{{email}}</td>
+      <td>{{firstName}}</td>
+      <td>{{lastName}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+{{#section 'script'}}
+<script type="application/javascript">
+  function save(val) {
+    alert(val + " saved successfully");
+  }
+</script>
+{{/section}}

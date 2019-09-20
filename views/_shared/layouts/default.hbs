@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta http-equiv="Content-Language" content="en" />
+  <meta name="msapplication-TileColor" content="#2d89ef">
+  <meta name="theme-color" content="#4188c9">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+  <!-- Generated: 2019-04-04 16:55:45 +0200 -->
+  <title>
+    {{#if @root.title}}
+    {{@root.title}} - Fanda
+    {{else}}
+    Fanda
+    {{/if}}
+  </title>
+  <link rel="stylesheet" href="/assets/css/fontawesome.min.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
+  {{!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic&subset=latin"> --}}
+  <script src="/assets/js/require.min.js"></script>
+  <script>
+    requirejs.config({
+      baseUrl: '/'
+    });
+  </script>
+  {{!-- Dashboard Core --}}
+  <link href="/assets/css/dashboard.css" rel="stylesheet" />
+  <script src="/assets/js/dashboard.js"></script>
+
+  {{!-- c3.js Charts Plugin --}}
+  {{!-- <link href="/assets/plugins/charts-c3/plugin.css" rel="stylesheet" />
+  <script src="/assets/plugins/charts-c3/plugin.js"></script> --}}
+  {{!-- Google Maps Plugin --}}
+  {{!-- <link href="/assets/plugins/maps-google/plugin.css" rel="stylesheet" />
+  <script src="/assets/plugins/maps-google/plugin.js"></script> --}}
+  {{!-- Input Mask Plugin --}}
+  {{!-- <script src="/assets/plugins/input-mask/plugin.js"></script> --}}
+  {{!-- Datatables Plugin --}}
+  {{!-- <script src="/assets/plugins/datatables/plugin.js"></script> --}}
+  {{!-- Tabulator tables Plugin --}}
+  {{!-- <link href="/assets/plugins/tabulator-tables/tabulator.min.css" rel="stylesheet" /> --}}
+  <link href="/assets/plugins/tabulator-tables/tabulator_bootstrap4.css" rel="stylesheet" />
+  <script src="/assets/plugins/tabulator-tables/plugin.js"></script>
+  {{!-- Toastr --}}
+  <link rel="stylesheet" href="/assets/css/toastr.min.css" />
+</head>
+
+<body>
+  <div class="page">
+    {{#if emptyLayout}}
+    <div class="page-single">
+      <div class="container">
+        {{{body}}}
+      </div>
+    </div>
+    {{else}}
+    <div class="flex-fill">
+      {{>header}}
+      {{#if currentOrg}}
+      {{>menu}}
+      {{/if}}
+      {{!-- <div class="my-3 my-md-5"> --}}
+      <div class="container">
+        <div class="page-header">
+          {{#if title}}
+          <h1 class="page-title">
+            {{title}}
+          </h1>
+          {{/if}}
+        </div>
+        {{{body}}}
+      </div>
+      {{!-- <div class="bottombar js-bottombar" style="display: none">
+                <a href="#" class="bottombar-close js-bottombar-close">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="feather feather-x">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </a>
+                <div class="container position-relative d-flex align-items-center">
+                  <a href="https://gumroad.com/l/tabler-email?utm_source=demo" class="bottombar-image">
+                    <picture>
+                      <source srcset="https://tabler.io/img/bottombar.webp" type="image/webp">
+                      <source srcset="https://tabler.io/img/bottombar.png" type="image/jpeg">
+                      <img src="https://tabler.io/img/bottombar.png" alt="">
+                    </picture>
+                  </a>
+                  <div class="d-lg-flex flex-fill align-items-center">
+                    <div class="mr-2">
+                      50 eye-catching templates tested in 90+ email clients. Compose your own, mobile optimized email message
+                      in less than 5 minutes!
+                    </div>
+                    <div class=" ml-auto mt-2 mt-lg-0">
+                      <a href="https://gumroad.com/l/tabler-email?utm_source=demo" class="btn btn-sm btn-green text-nowrap"
+                        target="_blank">More info</a>
+                    </div>
+                  </div>
+                </div>
+              </div> --}}
+      {{!-- </div> --}}
+    </div>
+    {{>footer}}
+    {{/if}}
+  </div>
+  {{!-- <script>
+    require(['jquery'], function () {
+      $(document).ready(function () {
+
+        function setCookie(name, value, days) {
+          var expires = "";
+          if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+          }
+          document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+
+        function getCookie(name) {
+          var nameEQ = name + "=";
+          var ca = document.cookie.split(';');
+          for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+          }
+          return null;
+        }
+
+        if (!getCookie('bottombar-hidden')) {
+          $('.js-bottombar').show();
+        }
+
+        $('.js-bottombar-close').on('click', function (e) {
+          $('.js-bottombar').hide();
+          setCookie('bottombar-hidden', 1, 7);
+
+          e.preventDefault();
+          return false;
+        });
+      });
+    });
+  </script> --}}
+  {{!-- <script src="/assets/plugins/toastr/toastr.min.js"></script> --}}
+  <script type="application/javascript">
+    require(['jquery', 'toastr', 'avatar'], function ($, toastr, avatar) {
+      $(document).ready(function () {
+        const msg_type = '{{message.type}}';
+        const msg_text = '{{message.text}}';
+        if (msg_text) {
+          toastr[msg_type](msg_text);
+        }
+      });
+
+      var userIcons = $("canvas#avatar");
+      if (userIcons.length > 0) {
+        userIcons.each(function (index, value) {
+          window.avatar.draw($(this)[0], true);
+        })
+      }
+    });
+  </script>
+  {{{_sections.script}}}
+</body>
+
+</html>

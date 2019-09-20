@@ -1,0 +1,88 @@
+{{assign 'title' 'Profile'}}
+
+<div class="row">
+  <div class="col-lg-4">
+    <div class="card card-profile">
+      <div class="card-header" style="background-image: url(/demo/photos/eberhard-grossgasteiger-311213-500.jpg);">
+      </div>
+      <div class="card-body text-center">
+        {{!-- <img class="card-profile-img" src="/demo/faces/male/16.jpg"> --}}
+        <canvas id="avatar" class="card-profile-img avatar" width="64" height="64">{{currentUser.firstName}}
+          {{currentUser.lastName}}</canvas>
+        <h3 class="mb-3">{{currentUser.firstName}} {{currentUser.lastName}}</h3>
+        {{!-- <p class="mb-4">
+          Big belly rude boy, million dollar hustler. Unemployed.
+        </p> --}}
+        <button class="btn btn-outline-primary btn-sm">
+          <span class="fe fe-twitter"></span> Follow
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-8">
+    <form class="card">
+      <div class="card-body">
+        <h3 class="card-title">Edit Profile</h3>
+        <div class="row">
+          <div class="col-sm-6 col-md-6">
+            <div class="form-group">
+              <label class="form-label">Username</label>
+              <input type="text" class="form-control" placeholder="Username" id="userName" name="userName"
+                value="{{currentUser.userName}}">
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-6">
+            <div class="form-group">
+              <label class="form-label">Email address</label>
+              <input type="email" class="form-control" placeholder="Email" id="email" name="email"
+                value="{{currentUser.email}}">
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-6">
+            <div class="form-group">
+              <label class="form-label">First Name</label>
+              <input type="text" class="form-control" placeholder="First Name" id="firstName" name="firstName"
+                value="{{currentUser.firstName}}">
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-6">
+            <div class="form-group">
+              <label class="form-label">Last Name</label>
+              <input type="text" class="form-control" placeholder="Last Name" id="lastName" name="lastName"
+                value="{{currentUser.lastName}}">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="form-label">Address</label>
+              <input type="text" class="form-control" placeholder="Home Address">
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+              <label class="form-label">City</label>
+              <input type="text" class="form-control" placeholder="City">
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-3">
+            <div class="form-group">
+              <label class="form-label">Postal Code</label>
+              <input type="number" class="form-control" placeholder="ZIP Code">
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="form-group">
+              <label class="form-label">Country</label>
+              <select class="form-control custom-select">
+                <option value="">India</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer text-right">
+        <button type="submit" class="btn btn-primary">Update Profile</button>
+      </div>
+    </form>
+  </div>
+</div>

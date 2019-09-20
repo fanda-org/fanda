@@ -1,0 +1,106 @@
+{{assign 'title' 'Organizations'}}
+
+<div class="card" style="height: 500px;">
+  <div class="card-header">
+    <h3 class="card-title">Organizations</h3>
+  </div>
+  <div class="card-body">
+
+    <div class="table-border">
+      <div id="example-table"></div>
+    </div>
+  </div>
+</div>
+<input type="hidden" id="orgId" name="orgId" value="{{org._id}}" />
+{{!-- {{#section 'script'}}
+<!-- Datatables Plugin -->
+<script src="/assets/plugins/datatables/plugin.js"></script>
+<script type="application/javascript">
+  require(['datatables', 'jquery'], function (datatable, $) {
+    $('.datatable').DataTable({
+      lengthMenu: [6, 10, 25, 50, 100],
+      pageLength: 6
+    });
+  });
+</script>
+{{/section}} --}}
+
+{{#section 'script'}}
+<script type="application/javascript">
+
+  var editButton = function (cell, formatterParams, onRendered) { //plain text value
+    // console.log(cell.value, cell.getValue());
+    const editString = `/organization/edit/${cell.getValue()}`;
+    const deleteString = editString.replace('edit', 'delete'); //`/organization/delete/${cell.getValue()}`;
+    return "<div class='btn-group'>" +
+      "<a class='btn btn-sm btn-outline-secondary' id='btnEdit' href='" + editString + "'><i class='fe fe-edit-3'></i></a>" +
+      "<a class='btn btn-sm btn-outline-danger' id='btnDelete' href='" + deleteString + "'><i class='fe fe-trash'></i></a>" +
+      "</div>"
+  };
+
+  require(['jquery', 'tabulator-tables'], function ($, Tabulator) {
+    $(document).ready(function () {
+      //$('.card').css("height", "500px");
+      var originalWidth = 1000;
+      function resize() {
+        //This will only set this._originalHeight once
+        this._originalHeight = this._originalHeight || $(this).height();
+        //get the new body width
+        var bodyWidth = $("body").width();
+        //get the difference in width, needed for hight calculation
+        var widthDiff = bodyWidth - originalWidth;
+        //new hight based on initial div height
+        var newHeight = this._originalHeight + (widthDiff / 10);
+        //sets the different height for every needed div
+        $(this).css("height", newHeight);
+
+      }
+
+      $(".card").each(resize);
+      $(document).resize(function () {
+        $(".card").each(resize);
+      });
+
+
+      var table = new Tabulator("#example-table", {
+        placeholder: 'No Data Available',
+        //height: "450px",
+        footerElement: "<div class='btn-group'><button class='btn btn-primary mr-2' id='btnAdd'><i class='fe fe-plus-circle'></i> Add</button></div>",
+        //selectable: true,
+        layout: "fitColumns",
+        pagination: 'local',
+        paginationSize: 10,
+        paginationSizeSelector: [10, 25, 50, 100],
+        columns: [
+          {
+            title: "Code", field: "_id", width: 150, formatter: 'link', formatterParams: {
+              labelField: "code",
+              urlPrefix: "/organizations/select/",
+              //target: "_blank",
+            }
+          },
+          { title: "Name", field: "name" },
+          { title: "Description", field: "description" },
+          { title: 'Status', field: 'active', width: 100, formatter: 'tickCross', align: 'center' },
+          { title: 'Actions', field: "_id", headerSort: false, width: 120, formatter: editButton, align: 'center' }
+        ],
+        index: "_id",
+        ajaxURL: '/organizations/list?code={not}FANDA&sort_by=name',
+        {{!-- renderComplete: function () {
+        //const balaRow = table.getRows().filter(row => row.getData().code == 'BALA');
+        //console.log(balaRow);
+        let orgId = $("#orgId").val();
+        table.selectRow(orgId);
+      }, --}}
+        {{!-- rowClick: function (e, row) {
+    $.post('/organizations/select', row.getData(), function (data) {
+      window.location = "/";
+    });
+  } --}}
+      });
+    });
+  });
+</script>
+{{/section}}
+
+{{!-- cellClick: function (e, cell) { alert(cell.getValue() + ' clicked!'); } --}}

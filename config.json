@@ -1,0 +1,5 @@
+﻿{
+  "connectionString": "mongodb://localhost/fanda-db",
+  "secret": "Sz3fxQXLobAC6DO8DxeG9T7Z238XWPvbJRLCvjoIWp46d3uYh8ZblZrFJi6orR0",
+  "sessionSecret": "midnight island"
+}
