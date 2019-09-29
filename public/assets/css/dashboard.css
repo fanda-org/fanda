@@ -6154,7 +6154,7 @@ a.close.disabled {
   padding: 0.25rem 0.5rem;
   color: #fff;
   text-align: center;
-  background-color: #000;
+  background-color: #060c27;
   border-radius: 3px;
 }
 
@@ -11442,7 +11442,7 @@ body {
   -webkit-font-feature-settings: "liga" 0;
   font-feature-settings: "liga" 0;
   height: 100%;
-  overflow-y: scroll;
+  /*overflow-y: scroll;*/
   position: relative;
 }
 
@@ -14601,7 +14601,7 @@ a.icon:hover {
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
   margin: 0;
-  padding: 1.5rem 1.5rem;
+  padding: 1rem 1rem;
   position: relative;
 }
 
@@ -14625,7 +14625,7 @@ a.icon:hover {
 
 .card-footer,
 .card-bottom {
-  padding: 1rem 1.5rem;
+  padding: 1rem 1rem;
   background: none;
 }
 
@@ -14636,7 +14636,7 @@ a.icon:hover {
 
 .card-header {
   background: none;
-  padding: 0.5rem 1.5rem;
+  padding: 1rem 1rem;
   display: -ms-flexbox;
   display: flex;
   min-height: 3.5rem;

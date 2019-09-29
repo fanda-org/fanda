@@ -3,26 +3,42 @@ const router = express.Router();
 const auth = require('../_helpers/passport-auth');
 const orgService = require('../services/organization.service');
 
+const defaultQuery = { code: '{not}FANDA', active: 'true', sort_by: 'code' };
+
 // routes
-router.get('/', auth.isAuthenticated, (req, res, next) => {
-  // console.log('qry', req.query);
-  orgService
-    .getAll({ code: '{not}FANDA' }) // 'code={not}FANDA' // { code: { $ne: 'FANDA' } }
-    .then(orgs => {
-      // const result = res.json(orgs);
-      // return result;
-      res.render('organizations', {
-        active: { organizations: true },
-        currentUser: req.session.user,
-        orgs: orgs,
-        currentOrg: req.session.organization
-      });
-      // res.render('organizations', {
-      //   active: { organizations: true },
-      //   organizations: orgs
-      // });
-    })
-    .catch(err => next(err));
+// INDEX
+router.get('/', auth.isAuthenticated, (req, res) => {
+  // console.log('req.query', req.query);
+
+  // eslint-disable-next-line no-unused-vars
+  // var { active, ...qry } = defaultQuery;
+  // if (req.query.open == 'true') {
+  //   qry = defaultQuery;
+  // }
+
+  // orgService
+  //   .getAll(qry)
+  //   .then(orgs => {
+  //     // const result = res.json(orgs);
+  //     // return result;
+  //     // console.log(orgs.length, req.query.open);
+  //     if (orgs.length == 1 && req.query.open == 'true') {
+  //       res.redirect('organizations/select/' + orgs[0]._id);
+  //     } else {
+  res.render('organizations', {
+    active: { organizations: true },
+    currentUser: req.session.user,
+    query: req.query.open,
+    //orgs: orgs,
+    currentOrg: req.session.organization
+  });
+  //   }
+  //   // res.render('organizations', {
+  //   //   active: { organizations: true },
+  //   //   organizations: orgs
+  //   // });
+  // })
+  // .catch(err => next(err));
 
   // res.render('organizations', {
   //   active: { organizations: true },
@@ -31,10 +47,20 @@ router.get('/', auth.isAuthenticated, (req, res, next) => {
   // });
 });
 
+// INDEX - AJAX
 router.get('/list', auth.isAuthenticated, (req, res, next) => {
-  // console.log('qry', req.query);
+  // console.log('req.query', req.query);
+
+  // eslint-disable-next-line no-unused-vars
+  var { active, ...qry } = defaultQuery;
+  if (req.query.open == 'true') {
+    qry = defaultQuery;
+  }
+  var combinedQry = { ...req.query, ...qry };
+
+  // console.log('queries', qry, combinedQry, req.query.open);
   orgService
-    .getAll(req.query)
+    .getAll(combinedQry)
     .then(orgs => {
       const result = res.json(orgs);
       return result;
@@ -46,6 +72,7 @@ router.get('/list', auth.isAuthenticated, (req, res, next) => {
     .catch(err => next(err));
 });
 
+// GET SELECT BY ID - OPEN ORGANIZATION
 router.get('/select/:id', auth.isAuthenticated, (req, res, next) => {
   orgService
     .getById(req.params.id)
@@ -60,37 +87,43 @@ router.get('/select/:id', auth.isAuthenticated, (req, res, next) => {
     .catch(err => next(err));
 });
 
-router.get('/:id', auth.isAuthenticated, getById);
-router.post('/', auth.isAuthenticated, create);
-router.put('/:id', auth.isAuthenticated, update);
-router.delete('/:id', auth.isAuthenticated, _delete);
-
-module.exports = router;
-
-function getById(req, res, next) {
+//GET - ADD/EDIT
+router.get('/:id', auth.isAuthenticated, (req, res, next) => {
   orgService
     .getById(req.params.id)
-    .then(org => (org ? res.json(org) : res.sendStatus(404)))
+    .then(org => {
+      res.render('organizations/edit', {
+        active: { organizations: true },
+        currentUser: req.session.user,
+        org: org,
+        currentOrg: req.session.organization
+      });
+    })
     .catch(err => next(err));
-}
+});
 
-function create(req, res, next) {
+// POST - CREATE
+router.post('/', auth.isAuthenticated, (req, res, next) => {
   orgService
     .create(req.body)
     .then(org => res.json(org))
     .catch(err => next(err));
-}
+});
 
-function update(req, res, next) {
+// PUT - UPDATE
+router.put('/:id', auth.isAuthenticated, (req, res, next) => {
   orgService
     .update(req.params.id, req.body)
     .then(org => res.json(org))
     .catch(err => next(err));
-}
+});
 
-function _delete(req, res, next) {
+// DELETE - REMOVE
+router.delete('/:id', auth.isAuthenticated, (req, res, next) => {
   orgService
     .delete(req.params.id)
     .then(() => res.json({}))
     .catch(err => next(err));
-}
+});
+
+module.exports = router;

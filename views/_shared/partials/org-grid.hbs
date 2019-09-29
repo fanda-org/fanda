@@ -1,0 +1,28 @@
+<script id="org-grid-template" type="text/x-handlebars-template">
+  \{{#each orgs as |org|}}
+  <div class="col-lg-6">
+    <div class="card card-profile card-select">
+      <div class="card-header" style="background-image: url(/demo/photos/andrew-neel-141710-500.jpg);">
+      </div>
+      <div class="card-body text-center" style="transform: rotate(0);">
+        {{!-- <img class="card-profile-img" src="/demo/faces/male/16.jpg"> --}}
+        <canvas class="card-profile-img avatar" id="avatar" width="96" height="96">\{{org.name}}</canvas>
+        <a class="stretched-link" href="/organizations/select/\{{org._id}}" style="text-decoration-line: none;">
+          <h3 class="mb-1 mt-0">\{{org.name}}</h3>
+        </a>
+        <h4 class="mb-1">\{{org.code}}</h4>
+        <p class="mb-1">\{{org.description}}</p>
+      </div>
+      <div class="card-footer">
+        <div class="row ml-1 mr-1">
+          <a href="/organizations/select/\{{org._id}}" class="col btn btn-primary mr-1"><i class="fe fe-check"></i>
+            Select</a>
+          <button class="col btn btn-secondary mr-1"><i class="fe fe-eye"></i> View</button>
+          <button class="col btn btn-secondary mr-1"> <i class="fe fe-edit-3"></i> Edit </button>
+          <button class="col btn btn-outline-danger"> <i class="fe fe-trash-2"></i> Delete </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  \{{/each}}
+</script>

@@ -8,7 +8,7 @@ router.get('/', auth.isAuthenticated, function(req, res) {
   if (currentOrg) {
     res.render('home', { active: { home: true }, currentUser: req.session.user, currentOrg: currentOrg });
   } else {
-    res.redirect('/organizations');
+    res.redirect('/organizations?open=true');
   }
 });
 
