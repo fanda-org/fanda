@@ -1,128 +1,125 @@
-﻿const express = require('express');
+﻿const express = require("express");
 const router = express.Router();
-const auth = require('../_helpers/passport-auth');
-const orgService = require('../services/organization.service');
+const auth = require("../_helpers/passport-auth");
+const orgService = require("../services/organization.service");
+const {
+  OrganizationViewModel
+} = require("../viewmodels/organization.viewmodel");
+const toastr = require("../_helpers/toastr-type");
 
-const defaultQuery = { code: '{not}FANDA', active: 'true', sort_by: 'code' };
+const defaultQuery = { code: "{not}FANDA", active: "true", sort_by: "code" };
 
-// routes
+/**
+ * ROUTES
+ */
+
 // INDEX
-router.get('/', auth.isAuthenticated, (req, res) => {
-  // console.log('req.query', req.query);
-
-  // eslint-disable-next-line no-unused-vars
-  // var { active, ...qry } = defaultQuery;
-  // if (req.query.open == 'true') {
-  //   qry = defaultQuery;
-  // }
-
-  // orgService
-  //   .getAll(qry)
-  //   .then(orgs => {
-  //     // const result = res.json(orgs);
-  //     // return result;
-  //     // console.log(orgs.length, req.query.open);
-  //     if (orgs.length == 1 && req.query.open == 'true') {
-  //       res.redirect('organizations/select/' + orgs[0]._id);
-  //     } else {
-  res.render('organizations', {
+router.get("/", auth.isAuthenticated, (req, res) => {
+  return res.render("organizations", {
     active: { organizations: true },
     currentUser: req.session.user,
     query: req.query.open,
-    //orgs: orgs,
     currentOrg: req.session.organization
   });
-  //   }
-  //   // res.render('organizations', {
-  //   //   active: { organizations: true },
-  //   //   organizations: orgs
-  //   // });
-  // })
-  // .catch(err => next(err));
-
-  // res.render('organizations', {
-  //   active: { organizations: true },
-  //   user: req.session.user,
-  //   org: req.session.organization
-  // });
 });
 
 // INDEX - AJAX
-router.get('/list', auth.isAuthenticated, (req, res, next) => {
-  // console.log('req.query', req.query);
-
+router.get("/list", auth.isAuthenticated, (req, res, next) => {
   // eslint-disable-next-line no-unused-vars
   var { active, ...qry } = defaultQuery;
-  if (req.query.open == 'true') {
+  if (req.query.open == "true") {
     qry = defaultQuery;
   }
   var combinedQry = { ...req.query, ...qry };
 
-  // console.log('queries', qry, combinedQry, req.query.open);
   orgService
     .getAll(combinedQry)
     .then(orgs => {
       const result = res.json(orgs);
       return result;
-      // res.render('organizations', {
-      //   active: { organizations: true },
-      //   organizations: orgs
-      // });
-    })
-    .catch(err => next(err));
-});
-
-// GET SELECT BY ID - OPEN ORGANIZATION
-router.get('/select/:id', auth.isAuthenticated, (req, res, next) => {
-  orgService
-    .getById(req.params.id)
-    .then(org => {
-      if (org) {
-        req.session.organization = org;
-        return res.redirect('/');
-      } else {
-        return res.sendStatus(404);
-      }
     })
     .catch(err => next(err));
 });
 
 //GET - ADD/EDIT
-router.get('/:id', auth.isAuthenticated, (req, res, next) => {
+router.get("/edit/:id", auth.isAuthenticated, (req, res, next) => {
+  if (req.params.id == "new") {
+    var orgModel = new OrganizationViewModel();
+    return res.render("organizations/edit", {
+      active: { organizations: true },
+      currentUser: req.session.user,
+      org: orgModel,
+      currentOrg: req.session.organization,
+      mode: "Create"
+    });
+  } else {
+    orgService
+      .getById(req.params.id)
+      .then(org => {
+        return res.render("organizations/edit", {
+          active: { organizations: true },
+          currentUser: req.session.user,
+          org: org,
+          currentOrg: req.session.organization,
+          mode: "Edit"
+        });
+      })
+      .catch(err => {
+        return res.render("organizations", {
+          active: { organizations: true },
+          currentUser: req.session.user,
+          query: req.query.open,
+          currentOrg: req.session.organization,
+          message: { type: toastr.WARNING, text: err }
+        }); //next();
+      });
+  }
+});
+
+// POST - SAVE
+router.post("/save", auth.isAuthenticated, (req, res, next) => {
   orgService
-    .getById(req.params.id)
+    .save(req.body)
     .then(org => {
-      res.render('organizations/edit', {
+      return res.redirect("/organizations");
+    })
+    .catch(err => {
+      //console.log("Error:", err);
+      var org = req.body;
+      return res.render("organizations/edit", {
         active: { organizations: true },
         currentUser: req.session.user,
         org: org,
-        currentOrg: req.session.organization
+        currentOrg: req.session.organization,
+        mode: org._id ? "Edit" : "Create",
+        message: {
+          type: toastr.WARNING,
+          text: err.code == 11000 ? "Code or Name already exists" : err.errmsg
+        }
       });
-    })
-    .catch(err => next(err));
-});
-
-// POST - CREATE
-router.post('/', auth.isAuthenticated, (req, res, next) => {
-  orgService
-    .create(req.body)
-    .then(org => res.json(org))
-    .catch(err => next(err));
-});
-
-// PUT - UPDATE
-router.put('/:id', auth.isAuthenticated, (req, res, next) => {
-  orgService
-    .update(req.params.id, req.body)
-    .then(org => res.json(org))
-    .catch(err => next(err));
+    });
 });
 
 // DELETE - REMOVE
-router.delete('/:id', auth.isAuthenticated, (req, res, next) => {
+router.post("/delete/:id", auth.isAuthenticated, (req, res, next) => {
   orgService
     .delete(req.params.id)
     .then(() => res.json({}))
+    .catch(err => next(err));
+});
+
+// GET SELECT BY ID - OPEN ORGANIZATION
+router.get("/select/:id", auth.isAuthenticated, (req, res, next) => {
+  orgService
+    .getById(req.params.id)
+    .then(org => {
+      if (org) {
+        req.session.organization = org;
+        return res.redirect("/");
+      } else {
+        return res.sendStatus(404);
+      }
+    })
     .catch(err => next(err));
 });
 

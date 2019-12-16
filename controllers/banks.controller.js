@@ -1,14 +1,14 @@
-﻿const express = require('express');
+﻿const express = require("express");
 const router = express.Router();
-const auth = require('../_helpers/passport-auth');
-const bankService = require('../services/bank.service');
+const auth = require("../_helpers/passport-auth");
+const bankService = require("../services/bank.service");
 
 // routes
-router.get('/', auth.isAuthenticated, getAll);
-router.get('/:id', auth.isAuthenticated, getById);
-router.post('/', auth.isAuthenticated, create);
-router.put('/:id', auth.isAuthenticated, update);
-router.delete('/:id', auth.isAuthenticated, _delete);
+router.get("/", auth.isAuthenticated, getAll);
+router.get("/:id", auth.isAuthenticated, getById);
+router.post("/", auth.isAuthenticated, create);
+router.put("/:id", auth.isAuthenticated, update);
+router.delete("/:id", auth.isAuthenticated, _delete);
 
 module.exports = router;
 

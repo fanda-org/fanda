@@ -1,36 +1,34 @@
 {{assign 'title' 'Organizations'}}
 
-<div class="card" style="height: 535px;overflow:scroll">
-  <div class="card-body">
-    <div class="row mb-4">
-      <ul class="nav col">
-        <li class="nav-item">
-          <button class="btn btn-primary"><i class="fe fe-plus-circle"></i> Create New</button>
-        </li>
-        <li class="nav-item">
-          <div class="btn-group" role="group">
-            <button class="btn btn-secondary" id="btnGridView" role="tooltip" data-toggle="tooltip" title="Grid view"><i class="fe fe-grid"></i></button>
-            <button class="btn btn-secondary" id="btnListView" role="tooltip" data-toggle="tooltip" title="List view"><i class="fe fe-list"></i></button>
+<div class="card">
+  <div class="card-header">
+    <div class="row ml-1">
+      <a href="/organizations/edit/new" class="col-md-auto btn btn-primary" role="tooltip" data-toggle="tooltip" title="Create new organization"><i class="fe fe-plus-circle"></i> Create New</a>
+      <div class="col-md-auto btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-secondary active" id="btnGridView" role="tooltip" data-toggle="tooltip" title="Grid view">
+          <input type="radio" name="options" id="option1" autocomplete="off" checked><i class="fe fe-grid"></i>
+        </label>
+        <label class="btn btn-secondary" id="btnListView" role="tooltip" data-toggle="tooltip" title="List view">
+          <input type="radio" name="options" id="option2" autocomplete="off"><i class="fe fe-list"></i>
+        </label>
+      </div>
+      <button class="col-md-auto btn btn-secondary" role="tooltip" data-toggle="tooltip" title="Filter"><i class="fe fe-filter"></i></button>
+      <div class="col-md-auto">
+        <div class="input-group" role="tooltip" data-toggle="tooltip" title="Search">
+          <div class="input-icon">
+            <div class="input-icon-addon"> <i class="fe fe-search"></i> </div>
+            <input type="search" class="form-control" id="search" name="search" placeholder="Search&hellip;" />
+            {{!-- <button class="btn btn-secondary">Search</button> --}}
           </div>
-        </li>
-        <li class="nav-item">
-          <button class="btn btn-secondary" role="tooltip" data-toggle="tooltip" title="Filter"><i class="fe fe-filter"></i></button>
-        </li>
-        <li class="nav-item">
-          <div class="input-group">
-            <div class="input-icon">
-              <div class="input-icon-addon"> <i class="fe fe-search"></i> </div>
-              <input type="search" class="form-control" id="search" name="search" placeholder="Search&hellip;" />
-              {{!-- <button class="btn btn-secondary">Search</button> --}}
-            </div>
-          </div>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
-    <div class="row justify-content-center gridview" id="org-grid">
+  </div>
+  <div class="card-body justify-content-center">
+    <div class="row gridview" id="org-grid">
       {{> org-grid}}
     </div>
-    <div class="row justify-content-center listview">
+    <div class="row listview">
       {{> org-list}}
     </div>
   </div>
@@ -64,7 +62,6 @@
       var qry = $("#query").val();
       $.get('/organizations/list?open=' + qry, function (orgs) {
         //console.log(orgs);
-
         var template = document.getElementById('org-grid-template').innerHTML;
         var renderOrgs = Handlebars.compile(template);
         document.getElementById('org-grid').innerHTML = renderOrgs({
@@ -80,6 +77,7 @@
           pagination: 'local',
           paginationSize: 10,
           paginationSizeSelector: [10, 25, 50, 100],
+          autoResize: true,
           columns: [
             {
               title: "Code", field: "_id", width: 150, formatter: 'link', formatterParams: {
@@ -90,7 +88,7 @@
             },
             { title: "Name", field: "name" },
             { title: "Description", field: "description" },
-            { title: 'Status', field: 'active', width: 100, formatter: 'tickCross', align: 'center' },
+            { title: 'Active', field: 'active', width: 100, formatter: 'tickCross', align: 'center' },
             { title: 'Actions', field: "_id", headerSort: false, width: 120, formatter: editButton, align: 'center' }
           ],
           index: "_id",

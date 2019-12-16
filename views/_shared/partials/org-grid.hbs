@@ -1,25 +1,36 @@
 <script id="org-grid-template" type="text/x-handlebars-template">
   \{{#each orgs as |org|}}
-  <div class="col-lg-6">
+  <div class="col-md-6">
     <div class="card card-profile card-select">
       <div class="card-header" style="background-image: url(/demo/photos/andrew-neel-141710-500.jpg);">
       </div>
       <div class="card-body text-center" style="transform: rotate(0);">
         {{!-- <img class="card-profile-img" src="/demo/faces/male/16.jpg"> --}}
         <canvas class="card-profile-img avatar" id="avatar" width="96" height="96">\{{org.name}}</canvas>
-        <a class="stretched-link" href="/organizations/select/\{{org._id}}" style="text-decoration-line: none;">
+        \{{#if org.active}}
+          <a class="stretched-link" href="/organizations/select/\{{org._id}}" style="text-decoration-line: none;">
+            <h3 class="mb-1 mt-0">\{{org.name}}</h3>
+          </a>
+        \{{else}}
           <h3 class="mb-1 mt-0">\{{org.name}}</h3>
-        </a>
+        \{{/if}}
         <h4 class="mb-1">\{{org.code}}</h4>
-        <p class="mb-1">\{{org.description}}</p>
+        <p class="mb-1">\{{org.description}}&nbsp;</p>
+        \{{#if org.active}}
+        <p><i class="fe fe-check-square"></i> Active</p>
+        \{{else}}
+        <p><i class="fe fe-square"></i> Inactive</p>
+        \{{/if}}
+        {{!-- <label><input type="checkbox" id="active" disabled \{{#if org.active}}checked\{{/if}}>Active</label> --}}
       </div>
       <div class="card-footer">
         <div class="row ml-1 mr-1">
-          <a href="/organizations/select/\{{org._id}}" class="col btn btn-primary mr-1"><i class="fe fe-check"></i>
-            Select</a>
-          <button class="col btn btn-secondary mr-1"><i class="fe fe-eye"></i> View</button>
-          <button class="col btn btn-secondary mr-1"> <i class="fe fe-edit-3"></i> Edit </button>
-          <button class="col btn btn-outline-danger"> <i class="fe fe-trash-2"></i> Delete </button>
+          \{{#if org.active}}
+          <a href="/organizations/select/\{{org._id}}" class="col-md btn btn-primary mr-1"><i class="fe fe-check"></i> Select</a>
+          \{{/if}}
+          <button class="col-md btn btn-secondary mr-1"><i class="fe fe-eye"></i> View</button>
+          <a href="/organizations/edit/\{{org._id}}" class="col-md btn btn-secondary mr-1"> <i class="fe fe-edit-3"></i> Edit</a>
+          <a href="/organizations/delete/\{{org._id}}" class="col-md btn btn-outline-danger"> <i class="fe fe-trash-2"></i> Delete</a>
         </div>
       </div>
     </div>

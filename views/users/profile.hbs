@@ -7,9 +7,13 @@
       </div>
       <div class="card-body text-center">
         {{!-- <img class="card-profile-img" src="/demo/faces/male/16.jpg"> --}}
-        <canvas id="avatar" class="card-profile-img avatar" width="64" height="64">{{currentUser.firstName}}
-          {{currentUser.lastName}}</canvas>
+        {{#if currentUser.firstName}}
+        <canvas id="avatar" class="card-profile-img avatar" width="64" height="64">{{currentUser.firstName}} {{currentUser.lastName}}</canvas>
         <h3 class="mb-3">{{currentUser.firstName}} {{currentUser.lastName}}</h3>
+        {{else}}
+        <canvas id="avatar" class="card-profile-img avatar" width="64" height="64">{{currentUser.userName}}</canvas>
+        <h3 class="mb-3">{{currentUser.userName}}</h3>        
+        {{/if}}
         {{!-- <p class="mb-4">
           Big belly rude boy, million dollar hustler. Unemployed.
         </p> --}}

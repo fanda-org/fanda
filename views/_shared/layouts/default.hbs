@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en" dir="ltr">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -24,9 +23,10 @@
     {{/if}}
   </title>
   <link rel="stylesheet" href="/assets/css/fontawesome.min.css">
-  {{!-- <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext"> --}}
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
   {{!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic&subset=latin"> --}}
+  {{!-- <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,500,500i,700,700i&display=swap" rel="stylesheet"> --}}
   <script src="/assets/js/require.min.js"></script>
   <script>
     requirejs.config({
@@ -170,9 +170,29 @@
           window.avatar.draw($(this)[0], true);
         })
       }
+
+      //$('.card').css("height", "500px");
+      // var originalWidth = 1000;
+      // function resize() {
+      //   //This will only set this._originalHeight once
+      //   this._originalHeight = this._originalHeight || $(this).height();
+      //   //get the new body width
+      //   var bodyWidth = $("body").width();
+      //   //get the difference in width, needed for hight calculation
+      //   var widthDiff = bodyWidth - originalWidth;
+      //   //new height based on initial div height
+      //   var newHeight = this._originalHeight + (widthDiff / 10);
+      //   //sets the different height for every needed div
+      //   $(this).css("height", newHeight);
+      // }
+      //
+      // $(".card").each(resize);
+      // $(document).resize(function () {
+      //   $(".card").each(resize);
+      // });
+
     });
   </script>
   {{{_sections.script}}}
 </body>
-
 </html>

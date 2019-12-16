@@ -48,10 +48,17 @@
         </div>
         <div class="dropdown">
           <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
-            <canvas id="avatar" class="avatar" width="32" height="32">{{currentUser.firstName}}
-              {{currentUser.lastName}}</canvas>
+            {{#if currentUser.firstName}}
+            <canvas id="avatar" class="avatar" width="32" height="32">{{currentUser.firstName}} {{currentUser.lastName}}</canvas>
+            {{else}}
+            <canvas id="avatar" class="avatar" width="32" height="32">{{currentUser.userName}}</canvas>
+            {{/if}}
             <span class="ml-2 d-none d-lg-block">
+              {{#if currentUser.firstName}}
               <span class="text-default">{{currentUser.firstName}}</span>
+              {{else}}
+              <span class="text-default">{{currentUser.userName}}</span>
+              {{/if}}
               <small class="text-muted d-block mt-1">Administrator</small>
             </span>
           </a>
