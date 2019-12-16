@@ -1,6 +1,6 @@
 <script id="org-grid-template" type="text/x-handlebars-template">
   \{{#each orgs as |org|}}
-  <div class="col-md-6">
+  <div class="col-md-4">
     <div class="card card-profile card-select">
       <div class="card-header" style="background-image: url(/demo/photos/andrew-neel-141710-500.jpg);">
       </div>
@@ -16,11 +16,13 @@
         \{{/if}}
         <h4 class="mb-1">\{{org.code}}</h4>
         <p class="mb-1">\{{org.description}}&nbsp;</p>
+        {{!-- 
         \{{#if org.active}}
         <p><i class="fe fe-check-square"></i> Active</p>
         \{{else}}
         <p><i class="fe fe-square"></i> Inactive</p>
         \{{/if}}
+        --}}
         {{!-- <label><input type="checkbox" id="active" disabled \{{#if org.active}}checked\{{/if}}>Active</label> --}}
       </div>
       <div class="card-footer">
@@ -28,7 +30,7 @@
           \{{#if org.active}}
           <a href="/organizations/select/\{{org._id}}" class="col-md btn btn-primary mr-1"><i class="fe fe-check"></i> Select</a>
           \{{/if}}
-          <button class="col-md btn btn-secondary mr-1"><i class="fe fe-eye"></i> View</button>
+          <a href="/organizations/view/\{{org._id}}" class="col-md btn btn-secondary mr-1"><i class="fe fe-eye"></i> View </a>
           <a href="/organizations/edit/\{{org._id}}" class="col-md btn btn-secondary mr-1"> <i class="fe fe-edit-3"></i> Edit</a>
           <a href="/organizations/delete/\{{org._id}}" class="col-md btn btn-outline-danger"> <i class="fe fe-trash-2"></i> Delete</a>
         </div>
