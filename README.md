@@ -1,2 +1,2 @@
-# fanda
+# Fanda
 Finance and Accounting System
